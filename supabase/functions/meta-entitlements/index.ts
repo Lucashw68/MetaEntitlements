@@ -31,8 +31,8 @@ Deno.serve(async (req) => {
         .select('meta_id')
 
       if (error) throw new Error(error.message)
-      if (!range) throw new Error('Range is required')
-      applications = data?.map((app: any) => app.meta_id).slice(range.start, range.end) ?? []
+      const storedApplications = data?.map((app: any) => app.meta_id) ?? []
+      applications = range ? storedApplications.slice(range.start, range.end) : storedApplications
     } else {
       applications = applicationIds
     }
